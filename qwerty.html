@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Virtual Keyboard</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+padding:10px;
+font-size: medium;
+background-color: #1A1919;
+margin: 0 auto;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+#keyboard {
+display: grid;
+grid-template-columns: repeat(11, 0.1fr);
+gap: 15px;
+padding: 20px;
+background-color: #27272c;
+border: 2px solid #A5A1A1;
+max-width: 100%;
+max-height:px;
+margin: 0 auto;
+position: relative; /* Added line */
+left: 0%;
+}
+
+.key {
+width: 90px ;
+text-align: center;
+line-height: 60px;
+color: #FEFEFE; 
+border: 2px solid #A5A1A1;
+cursor: pointer;
+transition: transform 0.2s;
+}
+.special-key {
+background-color: #27272c;
+padding: 20px;
+color: #FEFEFE;
+border:2px solid #A5A1A1;
+text-align: center;
+cursor: pointer;
+}
+.backspace-key {
+background-color: #cccccc;
+border:1px solid#A5A1A1;
+cursor: pointer;
+}
+.backspace-key:hover {
+transform: scale(2.2);
+}
+.key:hover {
+transform: scale(2.4);
+}
+.special-key:hover {
+transform: scale(2.2);
+}
+#output {
+width:900px;
+height:200px;
+border: 2px solid #A5A1A1;
+margin-top: 10px;
+padding: 5px;
+ position: relative; /* Added line */
+    left: 0%;
+color: #FEFEFE;
+font-size: 20px;
+background-color: #27272c;
+font-family: Times New Roman, sans-serif;
+}
+</style>
+</head>
+<body>
+<div id="keyboard">
+<div class="key" data-letter="1">1</div>
+<div class="key" data-letter="2">2</div>
+<div class="key" data-letter="3">3</div>
+<div class="key" data-letter="4">4</div>
+<div class="key" data-letter="5">5</div>
+<div class="key" data-letter="6">6</div>
+<div class="key" data-letter="7">7</div>
+<div class="key" data-letter="8">8</div>
+<div class="key" data-letter="9">9</div>
+<div class="key" data-letter="0">0</div>
+<div class="key" data-letter="@"><b>@</b></div>
+<div class="key" data-letter="q">q</div>
+<div class="key" data-letter="w">w</div>
+<div class="key" data-letter="e">e</div>
+<div class="key" data-letter="r">r</div>
+<div class="key" data-letter="t">t</div>
+<div class="key" data-letter="y">y</div>
+<div class="key" data-letter="u">u</div>
+<div class="key" data-letter="i">i</div>
+<div class="key" data-letter="o">o</div>
+<div class="key" data-letter="p">p</div>
+<div class="key" data-letter="&#34;"><b>"</b></div>
+<div class="key" data-letter="a">a</div>
+<div class="key" data-letter="s">s</div>
+<div class="key" data-letter="d">d</div>
+<div class="key" data-letter="f">f</div>
+<div class="key" data-letter="g">g</div>
+<div class="key" data-letter="h">h</div>
+<div class="key" data-letter="j">j</div>
+<div class="key" data-letter="k">k</div>
+<div class="key" data-letter="l">l</div>
+<div class="key" data-letter="("><b>(</b></div>
+<div class="key" data-letter=")"><b>)</b></div>
+<div class="key" data-letter="z">z</div>
+<div class="key" data-letter="x">x</div>
+<div class="key" data-letter="c">c</div>
+<div class="key" data-letter="v">v</div>
+<div class="key" data-letter="b">b</div>
+<div class="key" data-letter="n">n</div>
+<div class="key" data-letter="m">m</div>
+<div class="key" data-letter="!"><b>!</b></div>
+<div class="key" data-letter=","><b>,</b></div>
+<div class="key" data-letter="."><b>.</b></div>
+<div class="key" data-letter="?"><b>?</b></div>
+<div class="key" data-letter="*"><b>*</b></div>
+<div class="key" data-letter="/"><b>/</b></div>
+<div class="key" data-letter="-"><b>-</b></div>
+<div class="key" data-letter="+"><b>+</b></div>
+<div class="key" data-letter="="><b>=</b></div>
+<div class="key" data-letter="&"><b>&</b></div>
+
+
+<div class="special-key" id="shift">CAPS LOCK</div>
+<div class = "special-key" id ="enter">ENTER</div>
+<div class = "special-key" id ="space">SPACE</div>
+<div class="special-key" id="backspace">BACK SPACE</div>
+<div class="special-key" id="clear">CLEAR</div>
+</div>
+
+<textarea id="output" name="textarea" cols="100" rows="5"></textarea>
+
+<script>
+
+const keys = document.querySelectorAll('.key, .key-alt');
+const output = document.getElementById('output');
+let shiftPressed = false;
+
+keys.forEach(key => {
+  key.addEventListener('click', () => {
+    let letter = key.dataset.letter;
+    if (shiftPressed && key.classList.contains('key')) {
+      letter = letter.toUpperCase();
+    }
+    output.textContent += letter;
+  });
+});
+const shiftKey = document.getElementById('shift');
+shiftKey.addEventListener('click', () => {
+shiftPressed = !shiftPressed;
+shiftKey.classList.toggle('active', shiftPressed);
+});
+const backspaceKey = document.getElementById('backspace');
+backspaceKey.addEventListener('click', () => {
+output.textContent = output.textContent.slice(0, -1);
+});
+
+const spaceKey = document.getElementById('space');
+spaceKey.addEventListener('click',() => {
+output.textContent += " "; // Add space
+});
+
+const enterKey = document.getElementById('enter');
+enterKey.addEventListener('click',() => {
+output.textContent += '\n'; //Change line
+});
+
+const clearButton = document.getElementById('clear');
+        clearButton.addEventListener('click', () => {
+            output.textContent = '';
+        });
+// Helper function to handle the delayed click or selection action
+function handleDelayedAction(element) {
+  // Define a variable to store the timer
+  let timer;
+
+  // Add a mouseover event listener
+  element.addEventListener('mouseover', () => {
+    // Set a timer to execute the action after 2 seconds (2000 milliseconds)
+    timer = setTimeout(() => {
+      // Click the element or add a selected class (you can choose one)
+      element.click(); // Click the element
+      // element.classList.add('selected'); // Add a selected class
+element.style.backgroundColor = '#1A1919';
+      // Clear the timer to prevent the action from executing multiple times
+      clearTimeout(timer);
+    }, 2000); // 2 seconds
+  });
+
+  // Add a mouseout event listener to cancel the timer when the cursor leaves
+  element.addEventListener('mouseout', () => {
+    clearTimeout(timer);
+element.style.backgroundColor = '';
+  });
+}
+
+// Apply the handleDelayedAction function to all keys and buttons
+const keysAndButtons = document.querySelectorAll('.key, .special-key');
+keysAndButtons.forEach(element => {
+  handleDelayedAction(element);
+});
+
+
+</script>
+</body>
+</html>
